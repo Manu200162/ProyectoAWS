@@ -10,7 +10,7 @@ Resources:
       FunctionName: getCustomer
       Environment:
         Variables:
-          USERS_TABLE: !Ref FedExTable
+          FEDEX_TABLE: !Ref FedExTable
       Handler: fedex.getCustomer
       Runtime: python3.6
       CodeUri: package/
@@ -18,7 +18,7 @@ Resources:
         - DynamoDBReadPolicy:
             TableName: !Ref FedExTable
       Events:
-        GetMovie:
+        GetCustomer:
           Type: Api
           Properties:
             RestApiId: !Ref MyAPI
@@ -31,7 +31,7 @@ Resources:
       FunctionName: putCustomer
       Environment:
         Variables:
-          USERS_TABLE: !Ref FedExTable
+          FEDEX_TABLE: !Ref FedExTable
       Handler: fedex.putCustomer
       Runtime: python3.6
       CodeUri: package/
@@ -39,11 +39,11 @@ Resources:
         - DynamoDBWritePolicy:
             TableName: !Ref FedExTable
       Events:
-        PutMovie:
+        PutCustomer:
           Type: Api
           Properties:
             RestApiId: !Ref MyAPI
-            Path: "/customer/{customer_id}:"
+            Path: "/customer/{customer_id}"
             Method: PUT
   
   GetPackage:
@@ -52,15 +52,15 @@ Resources:
       FunctionName: getPackage
       Environment:
         Variables:
-          USERS_TABLE: !Ref FedExTable
+          FEDEX_TABLE: !Ref FedExTable
       Handler: fedex.getPackage
       Runtime: python3.6
       CodeUri: package/
       Policies:
-        - DynamoDBWritePolicy:
+        - DynamoDBReadPolicy:
             TableName: !Ref FedExTable
       Events:
-        PutMovie:
+        GetPackage:
           Type: Api
           Properties:
             RestApiId: !Ref MyAPI
@@ -73,15 +73,15 @@ Resources:
       FunctionName: putPackage
       Environment:
         Variables:
-          USERS_TABLE: !Ref FedExTable
+          FEDEX_TABLE: !Ref FedExTable
       Handler: fedex.putPackage
       Runtime: python3.6
       CodeUri: package/
       Policies:
-        - DynamoDBReadPolicy:
-            TableName: !Ref FeTable
+        - DynamoDBWritePolicy:
+            TableName: !Ref FedExTable
       Events:
-        GetMovie:
+        PutPackage:
           Type: Api
           Properties:
             RestApiId: !Ref MyAPI
@@ -94,40 +94,21 @@ Resources:
       FunctionName: getCustomerPackageState
       Environment:
         Variables:
-          USERS_TABLE: !Ref FedExTable
+          FEDEX_TABLE: !Ref FedExTable
       Handler: fedex.getCustomerPackageState
-      Runtime: python3.6
-      CodeUri: package/
-      Policies:
-        - DynamoDBWritePolicy:
-            TableName: !Ref FedExTable
-      Events:
-        PutMovie:
-          Type: Api
-          Properties:
-            RestApiId: !Ref MyAPI
-            Path: "/customer/{customer_id}/package/{package_id}"
-            Method: GET
-  GetCustomerPackagePrice:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: getCustomerPackagePrice
-      Environment:
-        Variables:
-          USERS_TABLE: !Ref FedExTable
-      Handler: fedex.getCustomerPackagePrice
       Runtime: python3.6
       CodeUri: package/
       Policies:
         - DynamoDBReadPolicy:
             TableName: !Ref FedExTable
       Events:
-        GetMovie:
+        GetCustomerPackageState:
           Type: Api
           Properties:
             RestApiId: !Ref MyAPI
             Path: "/customer/{customer_id}/package/{package_id}"
             Method: GET
+  
   MyAPI:
     Type: AWS::Serverless::Api
     Properties:
@@ -156,3 +137,24 @@ Resources:
           AttributeType: S
         - AttributeName: sk
           AttributeType: S
+          
+#GetCustomerPackagePrice:
+  #  Type: AWS::Serverless::Function
+  #  Properties:
+  #    FunctionName: getCustomerPackagePrice
+  #    Environment:
+  #      Variables:
+  #        USERS_TABLE: !Ref FedExTable
+  #    Handler: fedex.getCustomerPackagePrice
+  #    Runtime: python3.6
+  #    CodeUri: package/
+  #    Policies:
+  #      - DynamoDBReadPolicy:
+  #          TableName: !Ref FedExTable
+  #    Events:
+  #      GetMovie:
+  #        Type: Api
+  #        Properties:
+  #          RestApiId: !Ref MyAPI
+  #          Path: "/customer/{customer_id}/package/{package_id}"
+  #          Method: GET

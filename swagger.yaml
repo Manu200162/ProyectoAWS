@@ -1,14 +1,14 @@
 openapi: 3.0.0
 
 paths:
-  /movie/{movie_id}:
+  /customer/{customer_id}:
     get:
-      summary:  Returns the  main information about a movie,
+      summary: Returns the main information about a customer
       parameters:
-        - name: movie_id
+        - name: cutomer_id
           in: path
           required: true
-          description: movie ID
+          description: customer ID
         - in: query
           name: date
           required: false
@@ -16,95 +16,111 @@ paths:
       x-amazon-apigateway-integration:
         type: "aws_proxy"
         uri:
-          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:getMovie/invocations"
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:getCustomer/invocations"
         httpMethod: "POST"
     put:
-      summary: Create or update new record for movie
+      summary: Create or update information for the customer
       parameters:
-        - name: movie_id
+        - name: customer_id
           in: path
           required: true
-          description: movie ID
+          description: customer ID
       requestBody:
         required: true
+        description: customer ID
         content:
           application/json:
             schema:
               type: object
               properties:
-                title:
+                customer_name:
                   type: string
-                main_actor:
+                residence:
                   type: string
-                year:
+                times_used_service:
+                  type: number
+                email:
                   type: string
       x-amazon-apigateway-integration:
         type: "aws_proxy"
         uri:
-          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:putMovie/invocations"
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:putCustomer/invocations"
         httpMethod: "POST"
-
-  /movie/{movie_id}/room/{room_id}:
+  /package/{package_id}:
     get:
-      summary: Given a movie and cinema room, displays all people that will attend
+      summary: Returns the main information about a package
       parameters:
-        - name: movie_id
+        - name: package_id
           in: path
           required: true
-          description: movie ID
-        - name: room_id
-          in: path
-          required: true
-          description: cinema room ID
+          description: package ID
+        - in: query
+          name: date
+          required: false
+          description: date
       x-amazon-apigateway-integration:
         type: "aws_proxy"
         uri:
-          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:getMovieByRoom/invocations"
-        httpMethod: "POST"
-  /room/{room_id}:
-    get:
-      summary: Returns how many seats are available and if it is a 3D Cinema Room
-      parameters:
-        - name: room_id
-          in: path
-          required: true
-          description: room ID
-      x-amazon-apigateway-integration:
-        type: "aws_proxy"
-        uri:
-          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:getRoom/invocations"
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:getPackage/invocations"
         httpMethod: "POST"
     put:
-      summary: Create or update a list of people to a Cinema room
+      summary: Create or update information of the pack
       parameters:
-        - name: room_id
+        - name: package_id
           in: path
           required: true
-          description: room ID
+          description: package ID
       requestBody:
         required: true
+        description: package ID
         content:
           application/json:
             schema:
               type: object
               properties:
-                people_list:
+                dimentions:
+                  type: number
+                weigth:
+                  type: number
+                type_package:
                   type: string
+                distance:
+                  type: number
+                origin:
+                  type: string
+                destination:
+                  type: string
+                estimated_price:
+                  type: number
+                discounts:
+                  type: number
+                total_price:
+                  type: number
+                date_registered:
+                  type: string
+                state:
+                  type: string
+                state_done:
+                  type: boolean
       x-amazon-apigateway-integration:
         type: "aws_proxy"
         uri:
-          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:putPeopleList/invocations"
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:putPackage/invocations"
         httpMethod: "POST"
-  /person/{person_id}:
+  /customer/{customer_id}/package/{package_id}:
     get:
-      summary: Returns all movies this person has watched and when that happened
+      summary: Given a customer and a package displays the state of the package
       parameters:
-        - name: person_id
+        - name: customer_id
           in: path
           required: true
-          description: person ID
+          description: customer ID
+        - name: package_id
+          in: path
+          required: true
+          description: package ID
       x-amazon-apigateway-integration:
         type: "aws_proxy"
         uri:
-          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:getPerson/invocations"
-        httpMethod: "POST"
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:getCustomerPackageState/invocations"
+        httpMethod: "POST" 
