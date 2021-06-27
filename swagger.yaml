@@ -1,0 +1,110 @@
+openapi: 3.0.0
+
+paths:
+  /movie/{movie_id}:
+    get:
+      summary:  Returns the  main information about a movie,
+      parameters:
+        - name: movie_id
+          in: path
+          required: true
+          description: movie ID
+        - in: query
+          name: date
+          required: false
+          description: date
+      x-amazon-apigateway-integration:
+        type: "aws_proxy"
+        uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:getMovie/invocations"
+        httpMethod: "POST"
+    put:
+      summary: Create or update new record for movie
+      parameters:
+        - name: movie_id
+          in: path
+          required: true
+          description: movie ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                main_actor:
+                  type: string
+                year:
+                  type: string
+      x-amazon-apigateway-integration:
+        type: "aws_proxy"
+        uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:putMovie/invocations"
+        httpMethod: "POST"
+
+  /movie/{movie_id}/room/{room_id}:
+    get:
+      summary: Given a movie and cinema room, displays all people that will attend
+      parameters:
+        - name: movie_id
+          in: path
+          required: true
+          description: movie ID
+        - name: room_id
+          in: path
+          required: true
+          description: cinema room ID
+      x-amazon-apigateway-integration:
+        type: "aws_proxy"
+        uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:getMovieByRoom/invocations"
+        httpMethod: "POST"
+  /room/{room_id}:
+    get:
+      summary: Returns how many seats are available and if it is a 3D Cinema Room
+      parameters:
+        - name: room_id
+          in: path
+          required: true
+          description: room ID
+      x-amazon-apigateway-integration:
+        type: "aws_proxy"
+        uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:getRoom/invocations"
+        httpMethod: "POST"
+    put:
+      summary: Create or update a list of people to a Cinema room
+      parameters:
+        - name: room_id
+          in: path
+          required: true
+          description: room ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                people_list:
+                  type: string
+      x-amazon-apigateway-integration:
+        type: "aws_proxy"
+        uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:putPeopleList/invocations"
+        httpMethod: "POST"
+  /person/{person_id}:
+    get:
+      summary: Returns all movies this person has watched and when that happened
+      parameters:
+        - name: person_id
+          in: path
+          required: true
+          description: person ID
+      x-amazon-apigateway-integration:
+        type: "aws_proxy"
+        uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:getPerson/invocations"
+        httpMethod: "POST"
