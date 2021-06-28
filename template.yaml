@@ -108,7 +108,26 @@ Resources:
             RestApiId: !Ref MyAPI
             Path: "/customer/{customer_id}/package/{package_id}"
             Method: GET
-  
+  PutCustomerAndPackage:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: putCustomerAndPackage
+      Environment:
+        Variables:
+          FEDEX_TABLE: !Ref FedExTable
+      Handler: fedex.putCustomerAndPackage
+      Runtime: python3.6
+      CodeUri: package/
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref FedExTable
+      Events:
+        PutPackage:
+          Type: Api
+          Properties:
+            RestApiId: !Ref MyAPI
+            Path: "/customer/{customer_id}/package/{package_id}"
+            Method: PUT
   MyAPI:
     Type: AWS::Serverless::Api
     Properties:
@@ -138,23 +157,3 @@ Resources:
         - AttributeName: sk
           AttributeType: S
           
-#GetCustomerPackagePrice:
-  #  Type: AWS::Serverless::Function
-  #  Properties:
-  #    FunctionName: getCustomerPackagePrice
-  #    Environment:
-  #      Variables:
-  #        USERS_TABLE: !Ref FedExTable
-  #    Handler: fedex.getCustomerPackagePrice
-  #    Runtime: python3.6
-  #    CodeUri: package/
-  #    Policies:
-  #      - DynamoDBReadPolicy:
-  #          TableName: !Ref FedExTable
-  #    Events:
-  #      GetMovie:
-  #        Type: Api
-  #        Properties:
-  #          RestApiId: !Ref MyAPI
-  #          Path: "/customer/{customer_id}/package/{package_id}"
-  #          Method: GET

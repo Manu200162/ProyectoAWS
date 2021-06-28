@@ -17,9 +17,10 @@ def getCustomer(event,context):
             'sk':'information'
         }
     )
+    item = response['Item']
     return {
         'statusCode': 200,
-        'body': json.dumps("item")
+        'body': json.dumps(item)
     }
 
 def putCustomer(event, context):
@@ -36,7 +37,7 @@ def putCustomer(event, context):
         'sk': 'information',
         'customer_name': body["customer_name"],
         'residence': body["residence"],
-        'times_used_service': body["times_used_service"],
+        'times_used_service': str(body["times_used_service"]),
         'email':body["email"]
     }
     print(json.dumps(item))
@@ -60,9 +61,10 @@ def getPackage(event,context):
             'sk':'information'
         }
     )
+    item = response['Item']
     return {
         'statusCode': 200,
-        'body': json.dumps("item")
+        'body': json.dumps(item)
     }
 
 def putPackage(event, context):
@@ -77,15 +79,15 @@ def putPackage(event, context):
     item = {
         'pk': package_id,
         'sk': 'information',
-        'dimentions': body["dimentions"],
-        'weigth': body["weigth"],
+        'dimentions':str(body["dimentions"]),
+        'weigth': str(body["weigth"]),
         'type_package': body["type_package"],
-        'distance':body["distance"],
+        'distance':str(body["distance"]),
         'origin':body["origin"],
         'destination':body["destination"],
-        'estimated_price':body["estimated_price"],
-        'discounts':body["discounts"],
-        'total_price':body["total_price"],
+        'estimated_price':str(body["estimated_price"]),
+        'discounts':str(body["discounts"]),
+        'total_price':str(body["total_price"]),
         'date_registered':body["date_registered"],
         'state':body["state"],
         'state_done':body["state_done"]
@@ -99,46 +101,44 @@ def putPackage(event, context):
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda!')
     }
+
 def getCustomerPackageState(event, context):
     print(json.dumps({"running": True}))
     print(json.dumps(event))
     path = event["path"]
-    customer_id = path.split("/")[-3] 
     package_id = path.split("/")[-1] 
-    body = json.loads(event["body"])
+    customer_id = path.split("/")[-3] 
     response = table.get_item(
         Key={
             'pk': customer_id,
-            'sk': package_id,
-            'state':body["state"],
-            'state_done':body["state_done"]
+            'sk': package_id
         }
     )
     item = response['Item']
     return {
         'statusCode': 200,
-        'body': json.dumps("item")
+        'body': json.dumps(item)
     }
     
-#def getCustomerPackagePrice(event, context):
-#    print(json.dumps({"running": True}))
-#    print(json.dumps(event))
-#    path = event["path"]
-#    customer_id = path.split("/")[-3] 
-#    package_id = path.split("/")[-1] 
-#    body = json.loads(event["body"])
-#    response = table.get_item(
-#        Key={
-#            'pk': customer_id,
-#            'sk': package_id,
-#            'total_price':body["total_price"]
-#        }
-#    )
-#    item = response['Item']
-#    return {
-#        'statusCode': 200,
-#        'body': json.dumps("item")
-#    }
+def putCustomerAndPackage(event,context):
+    print(json.dumps({"running": True}))
+    print(json.dumps(event))
+    path = event["path"]
+    package_id = path.split("/")[-1] 
+    customer_id = path.split("/")[-3] 
+    
+    body = json.loads(event["body"])
+    item = {
+        'pk': customer_id,
+        'sk': package_id,
+        'state': body["state"],
+        'state_done': body["state_done"],
+        'total_price':str( body["total_price"]),
+    }
+    print(json.dumps(item))
+    table.put_item(
+      Item=item
+    )
 
     
     

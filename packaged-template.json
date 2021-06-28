@@ -13,7 +13,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.getCustomer
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/3f8efa55b090aac9da673f68d8814059
+      CodeUri: s3://fedexapp-bucket-123/02be3c8e3f9b0e69efdcaee94b8f77b9
       Policies:
       - DynamoDBReadPolicy:
           TableName:
@@ -36,7 +36,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.putCustomer
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/3f8efa55b090aac9da673f68d8814059
+      CodeUri: s3://fedexapp-bucket-123/02be3c8e3f9b0e69efdcaee94b8f77b9
       Policies:
       - DynamoDBWritePolicy:
           TableName:
@@ -59,7 +59,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.getPackage
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/3f8efa55b090aac9da673f68d8814059
+      CodeUri: s3://fedexapp-bucket-123/02be3c8e3f9b0e69efdcaee94b8f77b9
       Policies:
       - DynamoDBReadPolicy:
           TableName:
@@ -82,7 +82,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.putPackage
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/3f8efa55b090aac9da673f68d8814059
+      CodeUri: s3://fedexapp-bucket-123/02be3c8e3f9b0e69efdcaee94b8f77b9
       Policies:
       - DynamoDBWritePolicy:
           TableName:
@@ -105,7 +105,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.getCustomerPackageState
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/3f8efa55b090aac9da673f68d8814059
+      CodeUri: s3://fedexapp-bucket-123/02be3c8e3f9b0e69efdcaee94b8f77b9
       Policies:
       - DynamoDBReadPolicy:
           TableName:
@@ -118,6 +118,29 @@ Resources:
               Ref: MyAPI
             Path: /customer/{customer_id}/package/{package_id}
             Method: GET
+  PutCustomerAndPackage:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: putCustomerAndPackage
+      Environment:
+        Variables:
+          FEDEX_TABLE:
+            Ref: FedExTable
+      Handler: fedex.putCustomerAndPackage
+      Runtime: python3.6
+      CodeUri: s3://fedexapp-bucket-123/02be3c8e3f9b0e69efdcaee94b8f77b9
+      Policies:
+      - DynamoDBWritePolicy:
+          TableName:
+            Ref: FedExTable
+      Events:
+        PutPackage:
+          Type: Api
+          Properties:
+            RestApiId:
+              Ref: MyAPI
+            Path: /customer/{customer_id}/package/{package_id}
+            Method: PUT
   MyAPI:
     Type: AWS::Serverless::Api
     Properties:
@@ -127,7 +150,7 @@ Resources:
         Fn::Transform:
           Name: AWS::Include
           Parameters:
-            Location: s3://fedexapp-bucket-123/4a3bac6e99e85e13eab28a517b57a16e
+            Location: s3://fedexapp-bucket-123/33668b810332d1fa84c918d1cc80a64b
   FedExTable:
     Type: AWS::DynamoDB::Table
     Properties:
