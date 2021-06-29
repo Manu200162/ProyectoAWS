@@ -13,7 +13,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.getCustomer
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/02be3c8e3f9b0e69efdcaee94b8f77b9
+      CodeUri: s3://fedexapp-bucket-123/52ded3ca98d5b59dc493fbc771bac334
       Policies:
       - DynamoDBReadPolicy:
           TableName:
@@ -36,7 +36,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.putCustomer
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/02be3c8e3f9b0e69efdcaee94b8f77b9
+      CodeUri: s3://fedexapp-bucket-123/52ded3ca98d5b59dc493fbc771bac334
       Policies:
       - DynamoDBWritePolicy:
           TableName:
@@ -59,7 +59,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.getPackage
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/02be3c8e3f9b0e69efdcaee94b8f77b9
+      CodeUri: s3://fedexapp-bucket-123/52ded3ca98d5b59dc493fbc771bac334
       Policies:
       - DynamoDBReadPolicy:
           TableName:
@@ -82,7 +82,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.putPackage
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/02be3c8e3f9b0e69efdcaee94b8f77b9
+      CodeUri: s3://fedexapp-bucket-123/52ded3ca98d5b59dc493fbc771bac334
       Policies:
       - DynamoDBWritePolicy:
           TableName:
@@ -105,7 +105,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.getCustomerPackageState
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/02be3c8e3f9b0e69efdcaee94b8f77b9
+      CodeUri: s3://fedexapp-bucket-123/52ded3ca98d5b59dc493fbc771bac334
       Policies:
       - DynamoDBReadPolicy:
           TableName:
@@ -128,13 +128,13 @@ Resources:
             Ref: FedExTable
       Handler: fedex.putCustomerAndPackage
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/02be3c8e3f9b0e69efdcaee94b8f77b9
+      CodeUri: s3://fedexapp-bucket-123/52ded3ca98d5b59dc493fbc771bac334
       Policies:
       - DynamoDBWritePolicy:
           TableName:
             Ref: FedExTable
       Events:
-        PutPackage:
+        PutCustomerAndPackage:
           Type: Api
           Properties:
             RestApiId:
@@ -150,7 +150,7 @@ Resources:
         Fn::Transform:
           Name: AWS::Include
           Parameters:
-            Location: s3://fedexapp-bucket-123/33668b810332d1fa84c918d1cc80a64b
+            Location: s3://fedexapp-bucket-123/3c2eb9e13c2ccfdaa98af866113a7130
   FedExTable:
     Type: AWS::DynamoDB::Table
     Properties:

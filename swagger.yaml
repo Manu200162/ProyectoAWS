@@ -131,9 +131,13 @@ paths:
           in: path
           required: true
           description: customer ID
+        - name: package_id
+          in: path
+          required: true
+          description: package ID
       requestBody:
         required: true
-        description: customer ID
+        description: customerPackage ID
         content:
           application/json:
             schema:

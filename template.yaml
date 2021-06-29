@@ -122,7 +122,7 @@ Resources:
         - DynamoDBWritePolicy:
             TableName: !Ref FedExTable
       Events:
-        PutPackage:
+        PutCustomerAndPackage:
           Type: Api
           Properties:
             RestApiId: !Ref MyAPI
