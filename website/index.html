@@ -4,23 +4,69 @@
 <head>
     <meta charset="UTF-8">
     <title>Consulta de paquetes</title>
+    
     <!-- Add some CSS to change client UI -->
     <style>
+    img{
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
     body {
-        background-color: #F1F7ED;
+        
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+
+        background-image: url("https://images.wallpapersden.com/image/download/purple-texture_a2lrZmuUmZqaraWkpJRobWllrWdma2U.jpg");
+
+
         }
-    label, button {
+        div{
+            background-color: #411277;
+            padding: 5px;
+        }
+    button {
+        margin-top: 50px;
         color: #FF9900;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 20px;
-        margin-left: 40px;
+        margin-left: auto;
+        margin-right: auto;
+
         }
+    label{
+        font-size: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #FFFFFF
+    }
      input {
         color: #232F3E;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 20px;
         margin-left: 20px;
         }
+    table{
+        
+        margin-top: 50px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+    }
+    table, th, td {
+
+        
+        background-color: #FFFFFF;
+        border: 1px solid #ddd;
+        border-collapse: collapse;
+        text-align: center
+
+        }
+    th,td{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+    }
     </style>
     <script>
         var callAPI = (customerId,packageId)=>{
@@ -47,8 +93,37 @@
                 console.log(datos.total_price);  
             }else{
                 console.log("No existen esos registros");
+
             }
     }
 }
     </script>
 </head>
+
+<body>
+<img src="https://www.fedex.com/content/dam/fedex-com/logos/logo.png" margin=10 px><img>
+    <div class="container">
+        <div class="section">
+            <form>
+                <label>Customer ID :</label>
+                <input type="text" id="customer">
+                <label>Package ID :</label>
+                <input type="text" id="package">
+                <button type="button" onclick="callAPI(document.getElementById('customer').value,document.getElementById('package').value)">Consulta</button>
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>State</th>
+                        <th>State_Done</th>
+                        <th>Total Price</th>
+                    </tr>
+                </thead>
+                <tbody id="res"> 
+
+                </tbody>
+            </table> 
+        </div>
+    </div>
+</body>
+</html>

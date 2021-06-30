@@ -164,6 +164,7 @@ Resources:
   S3BucketFedexWeb:
     Type: 'AWS::S3::Bucket'
     Properties:
+      AccessControl: PublicRead
       BucketName: fedex-bucket-website-123
       WebsiteConfiguration:
         IndexDocument: index.html
@@ -173,9 +174,21 @@ Resources:
         BlockPublicPolicy: false
         IgnorePublicAcls: false
         RestrictPublicBuckets: false
-        
+      CorsConfiguration:
+        CorsRules:
+          -
+            AllowedOrigins:
+              - '*'
+            AllowedHeaders:
+              - '*'
+            AllowedMethods:
+              - GET
+              - PUT
+              - POST
+              - DELETE
+              - HEAD
   
-        
+  
     
         
         
