@@ -133,6 +133,10 @@ Resources:
     Properties:
       Name: fedex-app
       StageName: prod
+      Cors:
+        AllowMethods: "'POST,OPTIONS, GET, PUT'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        AllowOrigin: "'*'"
       DefinitionBody:
         Fn::Transform:
           Name: AWS::Include

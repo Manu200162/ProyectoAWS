@@ -13,7 +13,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.getCustomer
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/52ded3ca98d5b59dc493fbc771bac334
+      CodeUri: s3://fedexapp-bucket-123/2c1384eed4dae901423f9b7ebd76e1a0
       Policies:
       - DynamoDBReadPolicy:
           TableName:
@@ -36,7 +36,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.putCustomer
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/52ded3ca98d5b59dc493fbc771bac334
+      CodeUri: s3://fedexapp-bucket-123/2c1384eed4dae901423f9b7ebd76e1a0
       Policies:
       - DynamoDBWritePolicy:
           TableName:
@@ -59,7 +59,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.getPackage
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/52ded3ca98d5b59dc493fbc771bac334
+      CodeUri: s3://fedexapp-bucket-123/2c1384eed4dae901423f9b7ebd76e1a0
       Policies:
       - DynamoDBReadPolicy:
           TableName:
@@ -82,7 +82,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.putPackage
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/52ded3ca98d5b59dc493fbc771bac334
+      CodeUri: s3://fedexapp-bucket-123/2c1384eed4dae901423f9b7ebd76e1a0
       Policies:
       - DynamoDBWritePolicy:
           TableName:
@@ -105,7 +105,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.getCustomerPackageState
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/52ded3ca98d5b59dc493fbc771bac334
+      CodeUri: s3://fedexapp-bucket-123/2c1384eed4dae901423f9b7ebd76e1a0
       Policies:
       - DynamoDBReadPolicy:
           TableName:
@@ -128,7 +128,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.putCustomerAndPackage
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/52ded3ca98d5b59dc493fbc771bac334
+      CodeUri: s3://fedexapp-bucket-123/2c1384eed4dae901423f9b7ebd76e1a0
       Policies:
       - DynamoDBWritePolicy:
           TableName:
@@ -146,6 +146,10 @@ Resources:
     Properties:
       Name: fedex-app
       StageName: prod
+      Cors:
+        AllowMethods: '''POST,OPTIONS, GET, PUT'''
+        AllowHeaders: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'''
+        AllowOrigin: '''*'''
       DefinitionBody:
         Fn::Transform:
           Name: AWS::Include

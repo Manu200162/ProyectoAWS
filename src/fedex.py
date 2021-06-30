@@ -117,6 +117,11 @@ def getCustomerPackageState(event, context):
     item = response['Item']
     return {
         'statusCode': 200,
+        "headers": {
+            "Access-Control-Allow-Headers" : "*",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "*"
+        },
         'body': json.dumps(item)
     }
     
