@@ -161,3 +161,23 @@ Resources:
         - AttributeName: sk
           AttributeType: S
           
+  S3BucketFedexWeb:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: fedex-bucket-website-123
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: index.html
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+        
+  
+        
+    
+        
+        
+  
+          

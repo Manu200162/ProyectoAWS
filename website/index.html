@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Consulta de paquetes</title>
+    <!-- Add some CSS to change client UI -->
+    <style>
+    body {
+        background-color: #F1F7ED;
+        }
+    label, button {
+        color: #FF9900;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        margin-left: 40px;
+        }
+     input {
+        color: #232F3E;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        margin-left: 20px;
+        }
+    </style>
+    <script>
+        var callAPI = (customerId,packageId)=>{
+            let url="https://cywjth8xoi.execute-api.sa-east-1.amazonaws.com/prod/customer/"+customerId+"/package/"+packageId;
+            const xhttp = new XMLHttpRequest
+            xhttp.open('GET',url,true);
+            xhttp.setRequestHeader("Content-Type","application/json");
+            xhttp.send();
+            xhttp.onreadystatechange =function(){
+            if(this.readyState ==4 && this.status ==200){
+                //console.log(this.response);
+                let datos =JSON.parse(this.response);
+                let res =document.querySelector('#res');
+                res.innerHTML=`
+                <tr>
+                  <td>${datos.state}</td>
+                  <td>${datos.state_done}</td>
+                  <td>${datos.total_price}</td>
+                </tr>
+                `
+                //console.log(datos); 
+                console.log(datos.state);  
+                console.log(datos.state_done); 
+                console.log(datos.total_price);  
+            }else{
+                console.log("No existen esos registros");
+            }
+    }
+}
+    </script>
+</head>
