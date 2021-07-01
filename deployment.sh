@@ -39,5 +39,6 @@ fi
 
 if [[ $WEBSITE == 1 ]]
 then
-    aws s3 cp website/index.html s3://fedex-bucket-website-123/index.html
+    aws s3 cp website s3://fedex-bucket-website-123/ --recursive
+    
 fi
