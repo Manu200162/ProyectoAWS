@@ -13,7 +13,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.getCustomer
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/a5163943b2f11fd023ca3b9d0cf6b2e0
+      CodeUri: s3://fedexapp-bucket-123/42e586555d7d3516bf7c16289dadefa2
       Policies:
       - DynamoDBReadPolicy:
           TableName:
@@ -36,7 +36,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.putCustomer
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/a5163943b2f11fd023ca3b9d0cf6b2e0
+      CodeUri: s3://fedexapp-bucket-123/42e586555d7d3516bf7c16289dadefa2
       Policies:
       - DynamoDBWritePolicy:
           TableName:
@@ -59,7 +59,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.getPackage
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/a5163943b2f11fd023ca3b9d0cf6b2e0
+      CodeUri: s3://fedexapp-bucket-123/42e586555d7d3516bf7c16289dadefa2
       Policies:
       - DynamoDBReadPolicy:
           TableName:
@@ -82,7 +82,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.putPackage
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/a5163943b2f11fd023ca3b9d0cf6b2e0
+      CodeUri: s3://fedexapp-bucket-123/42e586555d7d3516bf7c16289dadefa2
       Policies:
       - DynamoDBWritePolicy:
           TableName:
@@ -105,7 +105,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.getCustomerPackageState
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/a5163943b2f11fd023ca3b9d0cf6b2e0
+      CodeUri: s3://fedexapp-bucket-123/42e586555d7d3516bf7c16289dadefa2
       Policies:
       - DynamoDBReadPolicy:
           TableName:
@@ -128,7 +128,7 @@ Resources:
             Ref: FedExTable
       Handler: fedex.putCustomerAndPackage
       Runtime: python3.6
-      CodeUri: s3://fedexapp-bucket-123/a5163943b2f11fd023ca3b9d0cf6b2e0
+      CodeUri: s3://fedexapp-bucket-123/42e586555d7d3516bf7c16289dadefa2
       Policies:
       - DynamoDBWritePolicy:
           TableName:
@@ -176,7 +176,7 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: PublicRead
-      BucketName: fedex-bucket-website-123
+      BucketName: fedex-bucket-website-1234
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: index.html

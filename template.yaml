@@ -165,7 +165,7 @@ Resources:
     Type: 'AWS::S3::Bucket'
     Properties:
       AccessControl: PublicRead
-      BucketName: fedex-bucket-website-123
+      BucketName: fedex-bucket-website-1234
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: index.html
