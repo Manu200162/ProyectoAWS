@@ -1,5 +1,5 @@
 #!/bin/bash
-DEPLOYMENT_BUCKET="fedexapp-bucket-123"
+DEPLOYMENT_BUCKET="fedex-bucket-8888"
 STACK_NAME="fedEx-app"
 
 while getopts ":bdpw" OPTION; do

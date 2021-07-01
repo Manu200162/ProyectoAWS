@@ -165,7 +165,7 @@ Resources:
     Type: 'AWS::S3::Bucket'
     Properties:
       AccessControl: PublicRead
-      BucketName: fedex-bucket-website-1234
+      BucketName: fedex-bucket-website-uno
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: index.html
@@ -202,7 +202,34 @@ Resources:
             - !Join ['/', [!GetAtt [S3BucketFedexWeb, Arn], '*']]
             Principal: '*'
     
+  MyLambda1:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: fedex-lambda
+      Environment:
+        Variables:
+          FEDEX_TABLE: !Ref FedExTable
+      Handler: lambda.handler
+      Runtime: python3.6
+      CodeUri: package/
+      
+      
+  MySNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      Subscription:
+      - Endpoint: !GetAtt MyLambda1.Arn
+        Protocol: lambda
         
+      - Endpoint: testn@email.com
+        Protocol: email
+        
+      - Endpoint: llubylinares@gmail.com
+        Protocol: email
+        
+      TopicName: "Fedex-Topic"
+
+ 
         
   
           
